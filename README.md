@@ -12,7 +12,7 @@ Installation Step :
 
 ## Running App
 
-* Activate your virtualenv using "source <name>/bin/activate", here i'am using ubuntu.
+* Activate your virtualenv using "source <name>/bin/activate", here i'm using ubuntu.
 * Run app using "pythun run.py"
 
 OR
