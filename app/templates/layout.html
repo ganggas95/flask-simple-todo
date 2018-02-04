@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='img/favicon.ico')}}">
+    <title>Todo App : {{page_title}}</title>
+    <link href="{{url_for('static', filename='node_modules/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='node_modules/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+
+    <style>
+        table.dataTable thead th {
+            position: relative;
+            background-image: none !important;
+        }
+
+        table.dataTable thead th.sorting:after,
+        table.dataTable thead th.sorting_asc:after,
+        table.dataTable thead th.sorting_desc:after {
+            position: absolute;
+            top: 12px;
+            right: 8px;
+            display: block;
+            font-family: FontAwesome;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand">Todo App</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    {% if session.logged_in %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('get_todo_list') }}">Todo List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('get_users') }}">Users</a>
+                    </li>
+                    {%else%}
+                    <li class="nav-item"></li>
+                    {%endif%}
+                </ul>
+                <span class="navbar-text" style="display: inherit">
+                    {% if not session.logged_in %}
+                    <a class="nav-link" href="{{ url_for('auth_login') }}">Log in</a>
+                    <a class="nav-link" href="{{ url_for('register_user') }}">Sign Up</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ url_for('logout') }}">Log out</a>
+                    {% endif %}
+                </span>
+            </div>
+        </nav>
+        <br/> {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class='alert alert-{{category}} alert-dismissible fade show'>{{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %} {% block body %}{% endblock %}
+
+    </div>
+</body>
+
+</html>

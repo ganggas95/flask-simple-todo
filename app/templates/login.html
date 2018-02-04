@@ -1,0 +1,19 @@
+{% extends "layout.html" %} {% block body %}
+<h2>Login</h2>
+{% if error %}
+<p class=error>
+  <strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('auth_login') }}" method='post'>
+    {{form.csrf_token}}
+    <div class="form-group">
+      <label>{{form.username.label}} :</label>
+      {{form.username(class="form-control", placeholder="Masukkan username")}}
+    </div>
+    <div class="form-group">
+      <label>{{form.password.label}} :</label>
+      {{form.password(class="form-control", placeholder="Masukkan password")}}
+    </div>
+    <button class="btn btn-primary" type="submit"><i class="fa fa-sign-in"></i> Login</button>
+  </form>
+  {%include 'bootstrap.html'%}
+  {% endblock %}

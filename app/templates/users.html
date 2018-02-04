@@ -1,0 +1,78 @@
+{% extends "layout.html" %} {% block body %} {% if session.logged_in %}
+
+<link href="{{url_for('static', filename='node_modules/datatables/media/css/dataTables.bootstrap.min.css')}}" rel="stylesheet">
+
+<div class="row">
+  <div class="col-sm-4">
+    <form method="post" class="add-entry" action="
+      {%if mode == 'add'%}
+        {{url_for('get_users')}}
+      {%elif mode == 'edit'%}
+        {{url_for('change_user', id=user.id)}}
+      {%endif%}">
+      {{form.csrf_token}}
+      <div class="form-group">
+        <label>{{form.username.label}}:</label>
+        {{form.username(class="form-control", value=user.username if mode == 'edit' else '')}}
+      </div>
+      {%if mode=="add"%}
+      <div class="form-group">
+        <label>{{form.password.label}}:</label>
+        {{form.password(class="form-control")}}
+      </div>
+      <div class="form-group">
+        <label>{{form.confirm.label}}:</label>
+        {{form.confirm(class="form-control")}}
+      </div>
+      {%elif mode=='edit'%}
+      <div class="form-group">
+          <label>{{form.old_password.label}}:</label>
+          {{form.old_password(class="form-control")}}
+        </div>
+        <div class="form-group">
+          <label>{{form.new_password.label}}:</label>
+          {{form.new_password(class="form-control")}}
+        </div>
+      {%endif%}
+      <button type=submit class="btn btn-primary">
+        <i class="fa fa-save"></i> Save User</button>
+    </form>
+    <br> {% endif %}
+  </div>
+  <div class="col-sm-8">
+
+    <table class="table table-sm table-light table-striped table-bordered" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th class="text-center">No</th>
+          <th class="text-center">Username</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for user in users%}
+        <tr>
+          <td class="text-center">{{loop.index}}</td>
+          <td>{{user.username}}</td>
+          <td class="text-center">
+            <div class="btn-group btn-group-sm">
+              <a href="{{url_for('change_user', id=user.id)}}" class="btn btn-primary">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <a href="{{url_for('delete_user', id=user.id)}}" class="btn btn-danger">
+                <i class="fa fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+  </div>
+</div>
+{%include 'bootstrap.html'%}
+<script src="{{url_for('static', filename='node_modules/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{url_for('static', filename='node_modules/datatables/media/js/bootstrap.dataTables.min.js')}}"></script>
+<script>
+  $('.table').DataTable();
+</script> {% endblock %}

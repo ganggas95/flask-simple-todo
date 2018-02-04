@@ -1,0 +1,26 @@
+{% extends "layout.html" %} {% block body %}
+<h2>Register New User</h2>
+
+<form action="{{ url_for('register_user') }}" method='post'>
+    {{form.csrf_token}}
+    <div class="form-group">
+        <label>{{form.username.label}} :</label>
+        {{form.username(class="form-control", placeholder="Masukkan Username")}}
+    </div>
+    <div class="form-group">
+        <label>{{form.password.label}} :</label>
+        {{form.password(class="form-control", placeholder="Masukkan Password")}}
+    </div>
+    <div class="form-group">
+        <label>{{form.confirm.label}} :</label>
+        {{form.confirm(class="form-control", placeholder="Confirm Password")}}
+    </div>
+    <button class="btn btn-primary" type="submit">
+        <i class="fa fa-sign-in"></i> Register</button>
+    {% if error %}
+    <div class='error'>
+        <strong>Error:</strong> {{ error }}{% endif %}
+    </div>
+</form>
+{%include 'bootstrap.html'%}
+{% endblock %}
