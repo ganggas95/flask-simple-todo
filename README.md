@@ -7,7 +7,7 @@ Installation Step :
 
 ### With Virutalenv
 * Add virutalenv to your project using "virtualenv <name> -p python3
-* Activate your virtualenv using "source <name>/bin/activate", here i'am using ubuntu
+* Activate your virtualenv using "source <name>/bin/activate", here i'm using ubuntu
 * Install requirement package using "pip install -r requirements.txt"
 
 ## Running App
